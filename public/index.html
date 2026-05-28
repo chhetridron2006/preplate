@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrePlate — Canteen Pre-Order</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SCREEN 1: Login -->
+  <div id="screen-login" class="screen">
+    <div class="login-box">
+      <h1 class="brand">🍱 PrePlate</h1>
+      <p class="brand-sub">Canteen Pre-Order System</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="form-login">
+        <div class="field">
+          <label for="login-id">Student ID</label>
+          <input type="text" id="login-id" placeholder="e.g. 12345" />
+        </div>
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="Your password" />
+        </div>
+        <span class="error-msg" id="error-login"></span>
+        <button class="btn-primary" id="btn-login">Login &rarr;</button>
+      </div>
+
+      <!-- Register Form -->
+      <div id="form-register" class="hidden">
+        <div class="field">
+          <label for="reg-name">Full Name</label>
+          <input type="text" id="reg-name" placeholder="e.g. Tenzin Dorji" />
+        </div>
+        <div class="field">
+          <label for="reg-id">Student ID</label>
+          <input type="text" id="reg-id" placeholder="e.g. 12345" />
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="e.g. tenzin@cst.edu.bt" />
+        </div>
+        <div class="field">
+          <label for="reg-password">Password</label>
+          <input type="password" id="reg-password" placeholder="At least 6 characters" />
+        </div>
+        <span class="error-msg" id="error-register"></span>
+        <button class="btn-primary" id="btn-register">Create Account &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Menu + Cart -->
+  <div id="screen-menu" class="screen hidden">
+    <header class="navbar">
+      <span class="brand-small">🍱 PrePlate</span>
+      <span id="nav-student-name"></span>
+      <div class="nav-actions">
+        <button id="btn-my-orders" class="btn-nav">My Orders</button>
+        <button id="btn-exit" class="btn-exit">Logout &#x2192;</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <!-- Left: food menu -->
+      <section class="menu-section">
+        <h2>Today's Menu</h2>
+        <p id="menu-loading">Loading menu…</p>
+        <div id="menu-grid"></div>
+      </section>
+
+      <!-- Right: cart panel -->
+      <aside class="cart-section" id="cart-panel">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+          <!-- Toggle button to collapse/expand the cart -->
+          <button id="btn-cart-toggle" class="btn-cart-toggle" onclick="toggleCart()">▲ Hide</button>
+        </div>
+
+        <div id="cart-body">
+          <div id="cart-items">
+            <p id="cart-empty-msg">Your cart is empty.</p>
+          </div>
+
+          <div class="cart-total">
+            <span>Total:</span>
+            <span id="cart-total-price">Nu. 0</span>
+          </div>
+
+          <label for="pickup-time">Pickup Time</label>
+          <select id="pickup-time">
+            <option value="">-- Select a time --</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="1:30 PM">1:30 PM</option>
+            <option value="5:00 PM">5:00 PM</option>
+            <option value="5:30 PM">5:30 PM</option>
+          </select>
+
+          <span class="error-msg" id="error-order"></span>
+          <button id="btn-place-order" class="btn-primary">Place Pre-Order</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Order Confirmed -->
+  <div id="screen-confirm" class="screen hidden">
+    <div class="confirm-box">
+      <div class="confirm-icon">✅</div>
+      <h2>Order Confirmed!</h2>
+      <p id="confirm-intro"></p>
+      <div id="confirm-summary"></div>
+      <p id="confirm-pickup"></p>
+      <p class="confirm-note">Please collect your order at the canteen counter.</p>
+      <button id="btn-my-orders-confirm" class="btn-secondary">📋 View My Orders</button>
+      <button id="btn-new-order" class="btn-secondary">&#8592; Place Another Order</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: My Orders (order tracking) -->
+  <div id="screen-orders" class="screen hidden">
+    <header class="navbar">
+      <span class="brand-small">🍱 PrePlate</span>
+      <span id="nav-student-name-orders"></span>
+      <div class="nav-actions">
+        <button id="btn-back-menu" class="btn-nav">Back to Menu</button>
+        <button id="btn-exit-orders" class="btn-exit">Logout &#x2192;</button>
+      </div>
+    </header>
+
+    <div class="orders-page">
+      <h2>My Orders</h2>
+      <p id="orders-loading">Loading your orders…</p>
+      <div id="orders-list"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
